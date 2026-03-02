@@ -2,7 +2,7 @@ import socket
 import select
 import random
 
-HOST = socket.gethostbyname(socket.gethostname())
+HOST = '127.0.0.1'
 PORT = 1729
 
 server_socket = socket.socket()
