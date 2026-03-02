@@ -19,3 +19,11 @@ This project is designed for **Python 2.7**.
 1. **Pillow (PIL):** Required for rendering the chess piece images.
    ```bash
    pip install Pillow
+
+Configuration
+
+Before running the game, you need to point the Client to the Server's IP address:
+
+1. Open client.py in your text editor.
+2. Locate the line: IP = 'NONE'.
+3. Replace the IP address with the local IP of the computer running server.py.
