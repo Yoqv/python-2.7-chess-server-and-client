@@ -28,7 +28,7 @@ Before running the game, you need to point the Client to the Server's IP address
 2. Locate the line: IP = 'NONE'.
 3. Replace the IP address with the local IP of the computer running server.py.
 
-How To Run
+## How To Run
 
 1. Start the Server
 
