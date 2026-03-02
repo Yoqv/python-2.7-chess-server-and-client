@@ -25,7 +25,7 @@ This project is designed for **Python 2.7**.
 Before running the game, you need to point the Client to the Server's IP address:
 
 1. Open client.py in your text editor.
-2. Locate the line: IP = '192.168.1.249'.
+2. Locate the line: IP = '127.0.0.1'.
 3. Replace the IP address with the local IP of the computer running server.py.
 
 ## 🚀 How To Run
