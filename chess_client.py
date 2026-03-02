@@ -5,7 +5,7 @@ import select
 import threading
 
 PORT = 1729
-IP = 'NONE'
+IP = '192.168.1.249'
 ADDRESS = (IP, PORT)
 client_socket = socket.socket()
 messages_to_send = []
@@ -21,9 +21,7 @@ screen_size = (screen_width, screen_height)
 WHITE = "white"
 BLACK = "black"
 connected = threading.Event()
-TWO = 2
-ONE = 1
-ZERO = 0
+
 PIXEL_SIZE = 1
 BOARD_SIZE = 8
 chess_board_dict = {}
@@ -37,7 +35,7 @@ is_selected = False
 selected_point = None
 GAME_SQUARE_SIZE = screen_width / 20
 EMPTY_PIXEL = tk.PhotoImage(width=PIXEL_SIZE, height=PIXEL_SIZE)
-SIX = 6
+PAWN_STARTING_ROW = 6
 show_possible_moves = True
 RED = 'red'
 GREEN = 'green'
@@ -50,7 +48,7 @@ other_player_color = ""
 
 
 def rgb_to_tkinter_color(rgb):
-    """translates an rgb tuple of int to a tkinter friendly color code
+    """translates rgb tuple of int to a tkinter friendly color code
     """
     return "#%02x%02x%02x" % rgb
 
@@ -102,19 +100,19 @@ def place(point, game_object, color):
 
 
 def is_valid_point(point):
-    x = point[ZERO]
-    y = point[ONE]
-    if x < ZERO or x >= BOARD_SIZE:
+    x = point[0]
+    y = point[1]
+    if x < 0 or x >= BOARD_SIZE:
         return False
-    if y < ZERO or y >= BOARD_SIZE:
+    if y < 0 or y >= BOARD_SIZE:
         return False
 
     return True
 
 
 def get_pawn_moves(point, is_scanning_king_danger):
-    x = point[ZERO]
-    y = point[ONE]
+    x = point[0]
+    y = point[1]
     moves_list = []
 
     object_color = chess_board_dict[point].color
@@ -127,7 +125,7 @@ def get_pawn_moves(point, is_scanning_king_danger):
         if is_valid_point(new_point) and chess_board_dict[new_point].is_empty() and object_color == player_color:
             moves_list.append(new_point)
 
-        if y == SIX and chess_board_dict[new_point].is_empty() and object_color == player_color:
+        if y == PAWN_STARTING_ROW and chess_board_dict[new_point].is_empty() and object_color == player_color:
             new_point = (x, y - 2)
             if is_valid_point(new_point) and chess_board_dict[new_point].is_empty():
                 moves_list.append(new_point)
@@ -150,8 +148,8 @@ def get_pawn_moves(point, is_scanning_king_danger):
 
 
 def get_knight_moves(point):
-    x = point[ZERO]
-    y = point[ONE]
+    x = point[0]
+    y = point[1]
     moves_list = []
 
     object_color = chess_board_dict[point].color
@@ -186,8 +184,8 @@ def get_knight_moves(point):
 
 
 def get_rook_moves(point):
-    x = point[ZERO]
-    y = point[ONE]
+    x = point[0]
+    y = point[1]
     moves_list = []
 
     object_color = chess_board_dict[point].color
@@ -232,8 +230,8 @@ def get_rook_moves(point):
 
 
 def get_bishop_moves(point):
-    x = point[ZERO]
-    y = point[ONE]
+    x = point[0]
+    y = point[1]
     moves_list = []
 
     object_color = chess_board_dict[point].color
@@ -290,8 +288,8 @@ def get_queen_moves(point):
 
 
 def get_king_moves(point):
-    x = point[ZERO]
-    y = point[ONE]
+    x = point[0]
+    y = point[1]
     moves_list = []
 
     object_color = chess_board_dict[point].color
@@ -355,13 +353,13 @@ def move(point, new_point):
 def clear_board_colors():
     for y in range(BOARD_SIZE):
         for x in range(BOARD_SIZE):
-            if y % TWO == ZERO:
-                if x % TWO == ZERO:
+            if y % 2 == 0:
+                if x % 2 == 0:
                     color = WHITE
                 else:
                     color = BROWN
             else:
-                if x % TWO == ZERO:
+                if x % 2 == 0:
                     color = BROWN
                 else:
                     color = WHITE
@@ -429,7 +427,7 @@ def is_check_mate():
         if chess_board_dict[point].color == player_color:
             all_possible_player_moves += get_possible_moves_list(point)
 
-    return len(all_possible_player_moves) == ZERO
+    return len(all_possible_player_moves) == 0
 
 
 def create_board():
@@ -515,7 +513,7 @@ def select_game_square(point):
 
     if is_player_turn:
         did_player_move = False
-        if is_selected:
+        if is_selected and selected_point is not None:
             if point in get_possible_moves_list(selected_point):
                 did_player_move = True
                 game_info_label['text'] = "Other player's turn"
