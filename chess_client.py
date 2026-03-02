@@ -5,7 +5,7 @@ import select
 import threading
 
 PORT = 1729
-IP = '192.168.1.249'
+IP = '127.0.0.1'
 ADDRESS = (IP, PORT)
 client_socket = socket.socket()
 messages_to_send = []
