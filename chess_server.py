@@ -12,13 +12,12 @@ open_client_sockets = []
 messages_to_send = []
 clients_dict = {}
 BOARD_SIZE = 8
-ONE = 1
-ZERO = 0
+
 
 
 def get_opposite_point(point):
-    new_y = (BOARD_SIZE - ONE) - point[ONE]
-    new_x = (BOARD_SIZE - ONE) - point[ZERO]
+    new_y = (BOARD_SIZE - 1) - point[1]
+    new_x = (BOARD_SIZE - 1) - point[0]
     return new_x, new_y
 
 
